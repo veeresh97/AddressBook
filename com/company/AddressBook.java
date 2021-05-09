@@ -3,129 +3,70 @@ package com.company;
 import java.util.Scanner;
 
 public class AddressBook {
-    private String FirstName;
-    private String LastName;
-    private String Address;
-    private int Zip;
-    private String City;
-    private String State;
-    private int PhoneNumber;
-    private String Email;
+    static Scanner input = new Scanner(System.in);
+    static String[] info;
 
-    public AddressBook(String FirstName, String LastName, String Address, String City, int Zip,
-                           String State, int PhoneNumber, String Email) {
-        this.FirstName = FirstName;
-        this.LastName = LastName;
-        this.Address = Address;
-        this.Zip = Zip;
-        this.City = City;
-        this.State = State;
-        this.PhoneNumber = PhoneNumber;
-        this.Email = Email;
+    public static String[] Person() {
+        String[] contact = new String[8];
+        System.out.println("Enter your details accordingly \n1. First Name\n2. Last Name\n"
+                + "3. Address \n4. Zipcode \n5. City \n6. State\n" + "7. Phone number\n 8. e-mail");
+        for (int index = 0; index < contact.length; index++)
+            contact[index] = input.next();
+        return contact;
     }
 
-    public AddressBook() {
-
-    }
-        public String[] details() {
-            Scanner input = new Scanner(System.in);
-            String[] contact = new String[8];
-            System.out.println("Enter your First Name");
-            String Firstname = input.nextLine();
-            contact[0] = Firstname;
-            System.out.println("Enter your Last Name");
-            String LastName = input.nextLine();
-            contact[1] = LastName;
-            System.out.println("Enter your Address");
-            String Address = input.nextLine();
-            contact[2] = Address;
-            System.out.println("Enter your Zip code");
-            String Zip = input.next();
-            contact[3] = Zip;
-            System.out.println("Enter your City name");
-            String City = input.next();
-            contact[4] = City;
-            System.out.println("Enter your State name");
-            String State = input.next();
-            contact[5] = State;
-            System.out.println("Enter your Phone number");
-            String PhoneNumber = input.next();
-            contact[6] = PhoneNumber;
-            System.out.println("Enter your e-mail address");
-            String Email = input.next();
-            contact[7] = Email;
-            return contact;
+    public static String[] edit(String[] contact) {
+        System.out.println(
+                "Press the respective number you want to edit\n1  First Name\n2 Last Name\n3 Address\n4 Zip code\n5 City\n6 State\n7 phone number\n8 email");
+        int choose = input.nextInt();
+        if (choose >= 1 && choose <= 8) {
+            choose--;
+            System.out.println("Enter the new details you choose to edit");
+            contact[choose] = input.next();
         }
-    public void edit(String[] contact) {
-        System.out.println("If you want to edit then press 1 else press 0");
-        Scanner sc = new Scanner(System.in);
-        int read = sc.nextInt();
-        if (read == 1) {
-            System.out.println("Press the respective number you want to edit\n1  First Name\n2 Last Name\n3 Address\n4 Zip code\n5 City\n6 state\n7 phone number\n8 email");
-            int input = sc.nextInt();
-            switch (input) {
+        return contact;
+    }
+
+    public static String[] delete(String[] contact) {
+        System.out.println("Enter the first name of the contact you want to delete");
+        String person_name = input.next();
+        if (contact[0].equals(person_name)) {
+            for (int index = 0; index < contact.length; index++)
+                contact[index] = null;
+            System.out.println("Your contact has been deleted");
+        } else {
+            System.out.println("Contact name not available");
+        }
+        return contact;
+    }
+
+    public static void option() {
+        boolean bool = true;
+        while (bool) {
+            System.out.println("Type the following numbers if you want to perform the corresponding action");
+            System.out.println("1. EDIT\n2. DELETE\nAnyNumber. EXIT");
+            int action = input.nextInt();
+            switch (action) {
                 case 1:
-                    System.out.println("Enter your new First Name");
-                    String newFirstName = sc.next();
-                    contact[0] = newFirstName;
+                    info = edit(info);
                     break;
                 case 2:
-                    System.out.println("Enter your new Last Name");
-                    String newLastName = sc.next();
-                    contact[1] = newLastName;
-                    break;
-                case 3:
-                    System.out.println("Enter your new Address");
-                    String newAddress = sc.next();
-                    contact[2] = newAddress;
-                    break;
-                case 4:
-                    System.out.println("Enter your new Zip code");
-                    String newZip = sc.next();
-                    contact[3] = newZip;
-                    break;
-                case 5:
-                    System.out.println("Enter your new city name");
-                    String newCity = sc.next();
-                    contact[4] = newCity;
-                    break;
-                case 6:
-                    System.out.println("Enter your new State name");
-                    String newState = sc.next();
-                    contact[5] = newState;
-                    break;
-                case 7:
-                    System.out.println("Enter your new Phone number");
-                    String newPhoneNumber = sc.next();
-                    contact[6] = newPhoneNumber;
-                    break;
-                case 8:
-                    System.out.println("Enter your new email");
-                    String newEmail = sc.next();
-                    contact[7] = newEmail;
+                    info = delete(info);
                     break;
                 default:
-                    System.out.println("Invalid Input");
-                    break;
+                    bool = false;
             }
-            System.out.println("Your new details are as follows");
-            for (int j = 0; j < contact.length; j++) {
-                System.out.println(contact[j]);
+            for (int index = 0; index < info.length; index++) {
+                System.out.println(info[index]);
             }
         }
-        else if (read == 0) {
-            for (int j = 0; j < contact.length; j++) {
-                System.out.println(contact[j]);
-            }
-
-        }
-        else
-            System.out.println("Invalid Input");
     }
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the Address Book");
-        AddressBook contacts = new AddressBook();
-        String[] info = contacts.details();
-        contacts.edit(info);
+        System.out.println("WELCOME to the Address Book");
+        info = Person();
+        option();
+        System.out.println("*  THANK YOU  *");
     }
 }
+
