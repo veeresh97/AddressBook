@@ -32,9 +32,9 @@ public class AddressBook {
     public void details(){
             Scanner input = new Scanner(System.in);
             System.out.println("Enter your First Name");
-            String FirstName = input.next();
+            String FirstName = input.nextLine();
             System.out.println("Enter your Last Name");
-            String LastName = input.next();
+            String LastName = input.nextLine();
             System.out.println("Enter your Address");
             String Address = input.nextLine();
             System.out.println("Enter your Zip Code");
